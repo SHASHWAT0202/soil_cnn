@@ -1,7 +1,8 @@
+wheel>=0.38.0
+setuptools>=65.5.1
 flask==2.0.1
 werkzeug==2.0.1
 gunicorn==20.1.0
 numpy==1.21.6
 tensorflow-cpu==2.7.0
-pillow==8.4.0
-setuptools>=59.5.0 
+pillow==8.4.0 
