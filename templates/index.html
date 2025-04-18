@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Soil - AI Soil Analysis</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="/" class="logo">
+                    <img src="/static/images/logo.png" alt="Smart Soil Logo">
+                    <span class="logo-text">Smart Soil</span>
+                </a>
+                <button class="mobile-menu-button" id="mobile-menu-button">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="/" class="active">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Smart Soil Analysis</h1>
+            <p>Upload a soil image and our AI will identify the soil type and recommend suitable crops for optimal yield.</p>
+        </div>
+    </section>
+
+    <section class="main-section">
+        <div class="container">
+            <div class="grid grid-cols-2">
+                <!-- Upload Card -->
+                <div class="card">
+                    <div class="card-content">
+                        <h2>Soil Analysis</h2>
+                        <p class="description">Take a photo of your soil and get instant insights.</p>
+                        
+                        <form id="upload-form">
+                            <div class="upload-area" id="drop-area">
+                                <i class="fas fa-cloud-upload-alt icon"></i>
+                                <h3>Upload Soil Image</h3>
+                                <p>Drag & drop your image here or click to browse</p>
+                                <input type="file" id="file-input" accept=".jpg,.jpeg,.png" class="hidden">
+                            </div>
+                            
+                            <div class="loading hidden" id="loading">
+                                <div class="spinner"></div>
+                                <p>Analyzing soil image...</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Results Card -->
+                <div class="card hidden" id="result-card">
+                    <div class="card-content">
+                        <h2>Analysis Results</h2>
+                        
+                        <div class="text-center">
+                            <img src="" id="soil-image" class="soil-image">
+                        </div>
+                        
+                        <div class="result-details">
+                            <h3 id="soil-type">Soil Type: <span></span></h3>
+                            
+                            <div class="confidence-container">
+                                <div class="confidence-label">
+                                    <span>Confidence:</span>
+                                    <span id="confidence-text">0%</span>
+                                </div>
+                                <div class="confidence-bar">
+                                    <div class="confidence-fill" id="confidence-fill"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="soil-info">
+                                <h4>Description:</h4>
+                                <p id="soil-description"></p>
+                            </div>
+                            
+                            <div class="crop-recommendations">
+                                <h4>Recommended Crops:</h4>
+                                <div id="crop-list" class="crop-list">
+                                    <!-- Crop items will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="main-section" style="background-color: white;">
+        <div class="container">
+            <h2 class="section-title">Why Choose Smart Soil?</h2>
+            
+            <div class="grid grid-cols-3">
+                <div class="card">
+                    <div class="card-content text-center">
+                        <i class="fas fa-microscope icon"></i>
+                        <h3>Accurate Analysis</h3>
+                        <p>Our AI model trained on diverse soil samples ensures accurate soil type classification.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content text-center">
+                        <i class="fas fa-seedling icon"></i>
+                        <h3>Crop Recommendations</h3>
+                        <p>Get customized crop suggestions based on your soil type to maximize yield.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content text-center">
+                        <i class="fas fa-bolt icon"></i>
+                        <h3>Instant Results</h3>
+                        <p>Get rapid soil analysis within seconds of uploading your soil image.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Smart Soil - AI Soil Analysis | Powered by TensorFlow</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const navLinks = document.getElementById('nav-links');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+            
+            // Upload functionality
+            const dropArea = document.getElementById('drop-area');
+            const fileInput = document.getElementById('file-input');
+            const loading = document.getElementById('loading');
+            const resultCard = document.getElementById('result-card');
+            
+            // Common crop images - these are the only ones we actually have
+            const availableCropImages = [
+                'barley', 'cotton', 'groundnut', 'maize', 'millets',
+                'potato', 'rice', 'soyabean', 'sugarcane', 'wheat'
+            ];
+            
+            // Default fallback image for all other crops
+            const defaultCropImage = '/static/images/crops/temp/generic-crop.svg';
+            
+            // Drag and drop functionality
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+            
+            function highlight() {
+                dropArea.classList.add('highlight');
+            }
+            
+            function unhighlight() {
+                dropArea.classList.remove('highlight');
+            }
+            
+            dropArea.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length) {
+                    fileInput.files = files;
+                    handleFiles(files);
+                }
+            }
+            
+            dropArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files.length) {
+                    handleFiles(fileInput.files);
+                }
+            });
+            
+            function handleFiles(files) {
+                const file = files[0];
+                uploadFile(file);
+            }
+            
+            function uploadFile(file) {
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                // Show loading animation and hide previous results
+                loading.classList.remove('hidden');
+                resultCard.classList.add('hidden');
+                
+                // Set a timeout to ensure loading is displayed for at least 1 second
+                const uploadStartTime = Date.now();
+                const minLoadingTime = 1000; // 1 second minimum loading time
+                
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Calculate how long to show the loading animation
+                    const elapsedTime = Date.now() - uploadStartTime;
+                    const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
+                    
+                    // Ensure loading is shown for at least the minimum time
+                    setTimeout(() => {
+                        // Hide loading animation
+                        loading.classList.add('hidden');
+                        // Display results
+                        displayResults(data, file);
+                    }, remainingTime);
+                })
+                .catch(error => {
+                    // Ensure loading is shown for at least the minimum time
+                    const elapsedTime = Date.now() - uploadStartTime;
+                    const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
+                    
+                    setTimeout(() => {
+                        // Hide loading animation on error too
+                        loading.classList.add('hidden');
+                        console.error('Error:', error);
+                        alert('Error: ' + error.message);
+                    }, remainingTime);
+                });
+            }
+            
+            function displayResults(data, file) {
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    return;
+                }
+                
+                // Display image
+                const soilImage = document.getElementById('soil-image');
+                soilImage.src = URL.createObjectURL(file);
+                
+                // Set soil type
+                document.querySelector('#soil-type span').textContent = data.soil_type;
+                
+                // Set confidence
+                const confidenceFill = document.getElementById('confidence-fill');
+                const confidenceText = document.getElementById('confidence-text');
+                confidenceFill.style.width = data.confidence + '%';
+                confidenceText.textContent = data.confidence.toFixed(2) + '%';
+                
+                // Set description
+                document.getElementById('soil-description').textContent = data.description;
+                
+                // Set crop recommendations with images
+                const cropListContainer = document.getElementById('crop-list');
+                cropListContainer.innerHTML = '';
+                
+                // Handle different formats of recommendations data
+                let crops = [];
+                if (typeof data.recommendations === 'string') {
+                    // Remove any emoji prefix if present
+                    const recommendationsText = data.recommendations.replace('🌾 Suitable crops: ', '');
+                    // Split the string by commas and clean up each crop name
+                    crops = recommendationsText.split(', ').map(crop => {
+                        return crop.replace(/\s*\(.*?\)\s*$/, '').trim().toLowerCase();
+                    });
+                } else if (Array.isArray(data.recommendations)) {
+                    crops = data.recommendations.map(crop => crop.toLowerCase());
+                }
+                
+                // Create a crop item for each recommended crop
+                const createCropElements = (cropList) => {
+                    cropList.forEach(crop => {
+                        const cropItem = document.createElement('div');
+                        cropItem.className = 'crop-item';
+                        
+                        const cropImg = document.createElement('img');
+                        // Check if we have this crop image available
+                        if (availableCropImages.includes(crop)) {
+                            cropImg.src = `/static/images/crops/${crop}.jpg`;
+                        } else if (crop === 'potatoes') {
+                            cropImg.src = '/static/images/crops/potato.jpeg';
+                        } else {
+                            cropImg.src = defaultCropImage;
+                        }
+                        
+                        cropImg.alt = crop;
+                        cropImg.onerror = function() {
+                            // If image fails to load, use default image
+                            this.src = defaultCropImage;
+                        };
+                        
+                        const cropName = document.createElement('span');
+                        cropName.className = 'crop-name';
+                        cropName.textContent = crop.charAt(0).toUpperCase() + crop.slice(1);
+                        
+                        cropItem.appendChild(cropImg);
+                        cropItem.appendChild(cropName);
+                        cropListContainer.appendChild(cropItem);
+                    });
+                };
+                
+                // Use the function to create crop elements
+                createCropElements(crops);
+                
+                // Show result card
+                resultCard.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html> 

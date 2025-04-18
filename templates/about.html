@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Smart Soil - AI Soil Analysis</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="/" class="logo">
+                    <img src="/static/images/logo.png" alt="Smart Soil Logo">
+                    <span class="logo-text">Smart Soil</span>
+                </a>
+                <button class="mobile-menu-button" id="mobile-menu-button">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about" class="active">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>About Smart Soil</h1>
+            <p>Learn about our soil classification technology and how it can help improve agricultural outcomes.</p>
+        </div>
+    </section>
+
+    <section class="main-section">
+        <div class="container">
+            <div class="about-intro">
+                <h2>Our Technology</h2>
+                <p class="lead">
+                    Smart Soil uses a sophisticated Convolutional Neural Network (CNN) trained on thousands of soil images 
+                    to accurately classify soil types. Our deep learning model can identify different soil types with high 
+                    precision to help farmers and gardeners make informed decisions.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>The Model</h3>
+                        <p>Our soil classification model is built using TensorFlow and Keras, with a CNN architecture that includes:</p>
+                        <ul>
+                            <li>Multiple convolutional layers for feature extraction</li>
+                            <li>Max pooling layers for spatial dimensionality reduction</li>
+                            <li>Dropout for regularization to prevent overfitting</li>
+                            <li>Dense layers for final classification</li>
+                        </ul>
+                        <p>The model is trained on diverse soil images from different regions and conditions to ensure robust performance in real-world scenarios.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-content">
+                        <h3>How It Works</h3>
+                        <ol>
+                            <li><strong>Image Upload:</strong> Users upload an image of soil via the web interface</li>
+                            <li><strong>Preprocessing:</strong> The image is resized and normalized</li>
+                            <li><strong>Classification:</strong> Our CNN model analyzes the image and identifies the soil type</li>
+                            <li><strong>Recommendations:</strong> Based on the identified soil type, suitable crops and farming practices are suggested</li>
+                        </ol>
+                        <p>The entire process takes just seconds, providing instant insights for better agricultural decisions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="main-section" style="background-color: white;">
+        <div class="container">
+            <h2>Soil Types We Identify</h2>
+            
+            <div class="grid grid-cols-2">
+                <div class="soil-card card">
+                    <div class="card-content">
+                        <h3>Black Soil</h3>
+                        <p>Rich in clay, calcium, potassium and magnesium. Retains moisture well and is excellent for deep-rooted crops.</p>
+                        <div class="crop-recommendations">
+                            <h4>Suitable crops:</h4>
+                            <div class="crop-list">
+                                <div class="crop-item"><img src="/static/images/crops/cotton.jpg" alt="Cotton"><span class="crop-name">Cotton</span></div>
+                                <div class="crop-item"><img src="/static/images/crops/soyabean.jpg" alt="Soybean"><span class="crop-name">Soybean</span></div>
+                                <div class="crop-item"><img src="/static/images/crops/maize.jpg" alt="Maize"><span class="crop-name">Maize</span></div>
+                                <div class="crop-item"><img src="/static/images/crops/millets.jpg" alt="Millets"><span class="crop-name">Millets</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="soil-card card">
+                    <div class="card-content">
+                        <h3>Cinder Soil</h3>
+                        <p>Consists of volcanic materials, typically found in volcanic regions. Light texture with good drainage but may require additional nutrients.</p>
+                        <div class="crop-recommendations">
+                            <h4>Suitable crops:</h4>
+                            <div class="crop-list">
+                                <div class="crop-item"><img src="/static/images/crops/millets.jpg" alt="Millets"><span class="crop-name">Millets</span></div>
+                                <div class="crop-item"><img src="/static/images/crops/groundnut.jpg" alt="Oilseeds"><span class="crop-name">Oilseeds</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="soil-card card">
+                    <div class="card-content">
+                        <h3>Laterite Soil</h3>
+                        <p>Red in color due to high iron oxide content. Common in tropical areas with high rainfall. Tends to be acidic and leached of nutrients.</p>
+                        <div class="crop-recommendations">
+                            <h4>Suitable crops:</h4>
+                            <div class="crop-list">
+                                <div class="crop-item"><img src="/static/images/crops/cotton.jpg" alt="Tea"><span class="crop-name">Tea</span></div>
+                                <div class="crop-item"><img src="/static/images/crops/cotton.jpg" alt="Coffee"><span class="crop-name">Coffee</span></div>
+                                <div class="crop-item"><img src="/static/images/crops/groundnut.jpg" alt="Cashew"><span class="crop-name">Cashew</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="soil-card card">
+                    <div class="card-content">
+                        <h3>Peat Soil</h3>
+                        <p>High in organic matter, retains moisture extremely well. Darker in color and generally acidic. Good for specific crops with proper management.</p>
+                        <div class="crop-recommendations">
+                            <h4>Suitable crops:</h4>
+                            <div class="crop-list">
+                                <div class="crop-item"><img src="/static/images/crops/rice.jpg" alt="Rice"><span class="crop-name">Rice</span></div>
+                                <div class="crop-item"><img src="/static/images/crops/potato.jpeg" alt="Potatoes"><span class="crop-name">Potatoes</span></div>
+                                <div class="crop-item"><img src="/static/images/crops/sugarcane.jpg" alt="Sugar Beet"><span class="crop-name">Sugar Beet</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="soil-card card">
+                    <div class="card-content">
+                        <h3>Yellow Soil</h3>
+                        <p>Contains iron oxides, often found in regions with moderate rainfall. Relatively less fertile than black soil but supports various crops.</p>
+                        <div class="crop-recommendations">
+                            <h4>Suitable crops:</h4>
+                            <div class="crop-list">
+                                <div class="crop-item"><img src="/static/images/crops/groundnut.jpg" alt="Groundnut"><span class="crop-name">Groundnut</span></div>
+                                <div class="crop-item"><img src="/static/images/crops/maize.jpg" alt="Maize"><span class="crop-name">Maize</span></div>
+                                <div class="crop-item"><img src="/static/images/crops/cotton.jpg" alt="Cotton"><span class="crop-name">Cotton</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="main-section">
+        <div class="container">
+            <h2>Technical Specifications</h2>
+            <div class="card specs-card">
+                <div class="card-content">
+                    <table class="specs-table">
+                        <tbody>
+                            <tr>
+                                <th>Model Architecture</th>
+                                <td>Convolutional Neural Network (CNN)</td>
+                            </tr>
+                            <tr>
+                                <th>Framework</th>
+                                <td>TensorFlow / Keras</td>
+                            </tr>
+                            <tr>
+                                <th>Input Size</th>
+                                <td>150 x 150 pixels</td>
+                            </tr>
+                            <tr>
+                                <th>Classes</th>
+                                <td>5 (Black, Cinder, Laterite, Peat, Yellow Soil)</td>
+                            </tr>
+                            <tr>
+                                <th>Deployment</th>
+                                <td>Flask Web Application</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Smart Soil - AI Soil Analysis | Powered by TensorFlow</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const navLinks = document.getElementById('nav-links');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html> 

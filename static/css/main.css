@@ -1,0 +1,335 @@
+/* Smart Soil - Main CSS - Minimalist Design */
+
+:root {
+  --primary-color: #3b5229;
+  --secondary-color: #94b66e;
+  --accent-color: #cead5c;
+  --light-color: #f5f8f2;
+  --dark-color: #233019;
+  --shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--light-color);
+  color: var(--dark-color);
+  line-height: 1.6;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header & Navigation */
+header {
+  background-color: var(--primary-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 40px;
+  width: auto;
+  margin-right: 10px;
+}
+
+.logo-text {
+  color: white;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+}
+
+.nav-links a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.nav-links a:hover {
+  color: white;
+}
+
+.nav-links a.active {
+  color: white;
+  border-bottom: 2px solid white;
+}
+
+.hero {
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.3)), url('/static/images/grassback.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 5rem 0;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Main Content */
+.main-section {
+  padding: 4rem 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.upload-area {
+  border: 2px dashed var(--secondary-color);
+  border-radius: 10px;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.upload-area:hover, .upload-area.highlight {
+  border-color: var(--primary-color);
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-3px);
+}
+
+.icon {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+/* Results */
+.soil-card {
+  border-left: 4px solid var(--primary-color);
+}
+
+.soil-image {
+  max-height: 250px;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.confidence-bar {
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0.5rem 0;
+}
+
+.confidence-fill {
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: 4px;
+}
+
+/* Crop Recommendations */
+.crop-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.crop-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.crop-item:hover {
+  transform: scale(1.05);
+}
+
+.crop-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--secondary-color);
+  background-color: var(--light-color);
+}
+
+.crop-name {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  color: var(--dark-color);
+  font-weight: 500;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+.spinner {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(59, 82, 41, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Footer */
+footer {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+/* Utility Classes */
+.hidden {
+  display: none !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* About Page Styles */
+.about-intro {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+}
+
+.lead {
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.specs-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.specs-table th, .specs-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.specs-table th {
+  text-align: left;
+  width: 40%;
+  font-weight: 600;
+}
+
+/* Responsive */
+.mobile-menu-button {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobile-menu-button {
+    display: block;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--primary-color);
+    padding: 1rem 0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .nav-links a {
+    padding: 0.75rem 2rem;
+  }
+  
+  .grid-cols-2, .grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+} 
